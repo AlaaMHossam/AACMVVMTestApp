@@ -14,18 +14,18 @@ class FlightsNetworkCall(webservice: Webservice) {
 
     fun getFlights(): LiveData<FlightsData> {
 
-        val data: MutableLiveData<FlightsData>? = null
+        val data = MutableLiveData<FlightsData>()
 
         getFlightsCall.enqueue(object : Callback<FlightsData> {
 
             override fun onResponse(call: Call<FlightsData>, response: Response<FlightsData>) {
-                data?.postValue(response.body())
+                data.value = response.body()
             }
 
             override fun onFailure(call: Call<FlightsData>, t: Throwable) {
             }
         })
 
-        return data!!
+        return data
     }
 }

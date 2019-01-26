@@ -2,18 +2,26 @@ package com.lifetimecode.aacmvvmtestapp.data.dagger.modules
 
 import com.google.gson.GsonBuilder
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
+import com.lifetimecode.aacmvvmtestapp.data.repositories.FlightsRepository
+import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
+import com.lifetimecode.aacmvvmtestapp.ui.MainActivity
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 object NetworkModule {
+
+    @Provides
+    internal fun flightsRepository(webservice: Webservice): FlightsRepository {
+        return FlightsRepository(webservice)
+    }
 
     @Provides
     internal fun webservice(retrofit: Retrofit): Webservice {

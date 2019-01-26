@@ -1,12 +1,22 @@
 package com.lifetimecode.aacmvvmtestapp.ui
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
+import com.lifetimecode.aacmvvmtestapp.data.repositories.FlightsRepository
+import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var flightsRepository: FlightsRepository
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -27,9 +37,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        val flightsViewModel = ViewModelProviders.of(this).get(FlightsViewModel::class.java)
+        flightsViewModel.getFlights(flightsRepository).observe(this, Observer {
+            Log.d("MainActivity", "onCreate : $it")
+        })
     }
 }

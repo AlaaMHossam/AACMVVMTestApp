@@ -6,16 +6,9 @@ import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
 import com.lifetimecode.aacmvvmtestapp.data.repositories.FlightsRepository
 import javax.inject.Inject
 
-class FlightsViewModel : ViewModel {
+class FlightsViewModel
 
-    constructor()
-
-    lateinit var flightsRepository: FlightsRepository
-
-    @Inject
-    constructor(flightsRepository: FlightsRepository){
-        this.flightsRepository = flightsRepository
-    }
+@Inject constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
 
     fun getFlights(): LiveData<FlightsData> {
         return flightsRepository.getFlightNetwork()

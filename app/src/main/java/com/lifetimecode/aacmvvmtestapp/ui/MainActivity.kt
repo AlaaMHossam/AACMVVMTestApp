@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var flightsRepository: FlightsRepository
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -44,8 +45,10 @@ class MainActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        val flightsViewModel = ViewModelProviders.of(this).get(FlightsViewModel::class.java)
-        flightsViewModel.getFlights(flightsRepository).observe(this, Observer {
+        val flightsViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
+
+        flightsViewModel.getFlights().observe(this, Observer {
             Log.d("MainActivity", "onCreate : $it")
         })
     }

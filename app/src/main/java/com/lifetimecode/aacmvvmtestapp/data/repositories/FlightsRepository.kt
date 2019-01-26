@@ -12,7 +12,7 @@ import javax.inject.Singleton
 class FlightsRepository
 
 @Inject
-constructor(val webservice: Webservice) {
+constructor(private val webservice: Webservice) {
 
     fun getFlightNetwork(): LiveData<FlightsData> {
         return FlightsNetworkCall(webservice).getFlights()

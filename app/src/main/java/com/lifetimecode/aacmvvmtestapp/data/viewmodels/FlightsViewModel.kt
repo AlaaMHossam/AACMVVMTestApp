@@ -4,13 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
 import com.lifetimecode.aacmvvmtestapp.data.repositories.FlightsRepository
+import javax.inject.Inject
 
 class FlightsViewModel : ViewModel {
 
     constructor()
 
-    fun getFlights(flightsRepository: FlightsRepository): LiveData<FlightsData> {
-        return flightsRepository.getFlightNetwork()
+    lateinit var flightsRepository: FlightsRepository
+
+    @Inject
+    constructor(flightsRepository: FlightsRepository){
+        this.flightsRepository = flightsRepository
     }
 
+    fun getFlights(): LiveData<FlightsData> {
+        return flightsRepository.getFlightNetwork()
+    }
 }

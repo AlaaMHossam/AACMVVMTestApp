@@ -19,11 +19,6 @@ import java.util.concurrent.TimeUnit
 object NetworkModule {
 
     @Provides
-    internal fun flightsRepository(webservice: Webservice): FlightsRepository {
-        return FlightsRepository(webservice)
-    }
-
-    @Provides
     internal fun webservice(retrofit: Retrofit): Webservice {
         return retrofit.create<Webservice>(Webservice::class.java)
     }

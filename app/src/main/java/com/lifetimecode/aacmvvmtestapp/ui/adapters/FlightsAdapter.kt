@@ -1,0 +1,36 @@
+package com.lifetimecode.aacmvvmtestapp.ui.adapters
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.lifetimecode.aacmvvmtestapp.R
+import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
+import com.lifetimecode.aacmvvmtestapp.databinding.FlightsListItemBinding
+import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter.ViewHolder
+
+class FlightsAdapter(private val arrivalsList: List<Arrival>) : RecyclerView.Adapter<ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        val inflater = LayoutInflater.from(parent.context)
+
+        val flightsListItemBinding: FlightsListItemBinding =
+            DataBindingUtil.inflate(inflater, R.layout.flights_list_item, parent, false)
+
+        return (ViewHolder(flightsListItemBinding))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(arrivalsList[position])
+
+    override fun getItemCount(): Int = arrivalsList.size
+
+    inner class ViewHolder(private val flightsListItemBinding: FlightsListItemBinding) :
+        RecyclerView.ViewHolder(flightsListItemBinding.root) {
+
+        fun bind(arrival: Arrival) {
+            flightsListItemBinding.flightsListItem = arrival
+            flightsListItemBinding.executePendingBindings()
+        }
+    }
+}

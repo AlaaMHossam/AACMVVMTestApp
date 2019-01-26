@@ -1,4 +1,4 @@
-package com.lifetimecode.aacmvvmtestapp.ui
+package com.lifetimecode.aacmvvmtestapp.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
+import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -42,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_main)
+            this, R.layout.activity_main
+        )
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
@@ -51,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         flightsViewModel.getFlights().observe(this, Observer {
             binding.flightData = it.result.arrivals[0]
+            rv.layoutManager = LinearLayoutManager(this)
+            rv.adapter = FlightsAdapter(it.result.arrivals)
         })
     }
 }

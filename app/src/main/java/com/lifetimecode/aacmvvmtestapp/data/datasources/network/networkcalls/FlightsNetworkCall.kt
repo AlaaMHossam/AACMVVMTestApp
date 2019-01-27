@@ -1,11 +1,9 @@
 package com.lifetimecode.aacmvvmtestapp.data.datasources.network.networkcalls
 
-import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
-import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,8 +26,7 @@ class FlightsNetworkCall(
                 when (response.code()) {
                     200 -> {
                         appExecutors.diskIO().execute {
-                            arrivalDao?.saveAllArrival(response.body()?.result?.arrivals as MutableList<Arrival>?)
-
+                            arrivalDao?.saveAllArrival(response.body()?.result?.arrivals)
                         }
                         data.value = response.body()
                     }
@@ -41,5 +38,4 @@ class FlightsNetworkCall(
         })
         return data
     }
-
 }

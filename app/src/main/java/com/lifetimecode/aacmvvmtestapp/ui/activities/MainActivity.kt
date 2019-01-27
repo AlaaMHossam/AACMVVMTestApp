@@ -15,6 +15,7 @@ import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -22,49 +23,43 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var flightsViewModel :FlightsViewModel
+    lateinit var flightsViewModel: FlightsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_main
-        )
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-         flightsViewModel =
+        flightsViewModel =
             ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
 
-        flightsViewModel.getFlightsNetworkUpdateDB().observe(this, Observer {
-           // binding.flightData = it.result.arrivals[0]
+       /* flightsViewModel.getFlightsNetworkUpdateDB().observe(this, Observer {
+            binding.flightData = it.result.arrivals[0]
             rv.layoutManager = LinearLayoutManager(this)
-         //   rv.adapter = FlightsAdapter(it)
+            rv.adapter = FlightsAdapter(it.result.arrivals)
 
-            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()?.value?.get(0)?.airlineName}")
-        })
+
+            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()}")
+        })*/
+
+       flightsViewModel.start()
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()?.value?.get(0)?.airlineName}")
-
-                //      message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                //      message.setText(R.string.title_dashboard)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                //      message.setText(R.string.title_notifications)
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
-
-
 }

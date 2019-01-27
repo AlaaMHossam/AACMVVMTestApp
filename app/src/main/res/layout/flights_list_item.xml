@@ -4,11 +4,22 @@
         <variable name="flightsListItem"
                   type="com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival"/>
     </data>
-    <TextView
-            android:layout_width="match_parent"
-            android:text="@{flightsListItem.flightNo}"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_flight_list_item">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
 
-    </TextView>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:text="@{flightsListItem.flightId}"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_flight_no">
+        </TextView>
+        <TextView
+                android:layout_width="match_parent"
+                android:text="@{flightsListItem.airlineName}"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_flight_airlinename">
+        </TextView>
+    </LinearLayout>
 </layout>

@@ -1,10 +1,7 @@
 package com.lifetimecode.aacmvvmtestapp.data.dagger.components
 
 import com.lifetimecode.aacmvvmtestapp.App
-import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AndroidContributors
-import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.NetworkModule
-import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.RepositoriesModule
-import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.ViewModelModule
+import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.*
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -16,7 +13,8 @@ import javax.inject.Singleton
         NetworkModule::class,
         AndroidContributors::class,
         RepositoriesModule::class,
-        ViewModelModule::class]
+        ViewModelModule::class,
+        RoomModule::class]
 )
 
 interface AppComponent : AndroidInjector<App> {

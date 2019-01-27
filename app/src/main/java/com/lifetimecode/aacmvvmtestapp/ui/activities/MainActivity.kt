@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
+import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
@@ -20,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var arrivalDao: ArrivalDao
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -52,10 +56,11 @@ class MainActivity : AppCompatActivity() {
         val flightsViewModel =
             ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
 
-        flightsViewModel.getFlights().observe(this, Observer {
+        flightsViewModel.getFlightsNetwork().observe(this, Observer {
             binding.flightData = it.result.arrivals[0]
             rv.layoutManager = LinearLayoutManager(this)
             rv.adapter = FlightsAdapter(it.result.arrivals)
+          //  flightsViewModel.saveArrivalDB()
         })
     }
 }

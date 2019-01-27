@@ -1,8 +1,12 @@
 package com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Arrival(
+    @PrimaryKey
     @SerializedName("flight_id")
     var flightId: String = "",
     @SerializedName("flight_no")

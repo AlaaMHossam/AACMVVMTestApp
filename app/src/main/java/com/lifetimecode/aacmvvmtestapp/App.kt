@@ -5,6 +5,7 @@ import android.app.Application
 import com.lifetimecode.aacmvvmtestapp.data.dagger.components.DaggerAppComponent
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.NetworkModule
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.RepositoriesModule
+import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.RoomModule
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -19,6 +20,7 @@ class App : Application(), HasActivityInjector {
         super.onCreate()
 
         DaggerAppComponent.builder()
+            .roomModule(RoomModule(this))
             .networkModule(NetworkModule)
             .repositoriesModule(RepositoriesModule)
             .build()

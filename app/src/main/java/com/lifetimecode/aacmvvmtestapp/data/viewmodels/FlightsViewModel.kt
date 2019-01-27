@@ -1,6 +1,8 @@
 package com.lifetimecode.aacmvvmtestapp.data.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
@@ -12,9 +14,15 @@ class FlightsViewModel
 @Inject
 constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
 
-    fun getFlightsNetwork(): LiveData<FlightsData> = flightsRepository.getFlightNetwork()
+    fun getFlightsNetwork(): MutableLiveData<FlightsData> = flightsRepository.getFlightNetwork()
 
-    fun getArrivalDB(): LiveData<List<Arrival>> = flightsRepository.getArrivalDB()
+    fun getFlightsNetworkUpdateDB(): MutableLiveData<FlightsData> = flightsRepository.getFlightNetworkUpdateDB()
 
-    fun saveArrivalDB() = flightsRepository.saveArrivalDB()
+    fun getArrivalDB(): LiveData<List<Arrival>>? {
+
+        Log.d("FlightsViewModel", "getArrivalDB : ${flightsRepository.getdb().value}")
+        return flightsRepository.getdb()
+    }
+
+//    fun saveArrivalDB() = flightsRepository.saveArrivalDB()
 }

@@ -1,6 +1,7 @@
 package com.lifetimecode.aacmvvmtestapp.ui.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -9,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
-import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
@@ -22,12 +22,35 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var arrivalDao: ArrivalDao
+    lateinit var flightsViewModel :FlightsViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        super.onCreate(savedInstanceState)
+
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
+            this, R.layout.activity_main
+        )
+
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+         flightsViewModel =
+            ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
+
+        flightsViewModel.getFlightsNetworkUpdateDB().observe(this, Observer {
+           // binding.flightData = it.result.arrivals[0]
+            rv.layoutManager = LinearLayoutManager(this)
+         //   rv.adapter = FlightsAdapter(it)
+
+            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()?.value?.get(0)?.airlineName}")
+        })
+    }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
+                Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()?.value?.get(0)?.airlineName}")
+
                 //      message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
@@ -43,24 +66,5 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
-        super.onCreate(savedInstanceState)
 
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_main
-        )
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-
-        val flightsViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
-
-        flightsViewModel.getFlightsNetwork().observe(this, Observer {
-            binding.flightData = it.result.arrivals[0]
-            rv.layoutManager = LinearLayoutManager(this)
-            rv.adapter = FlightsAdapter(it.result.arrivals)
-          //  flightsViewModel.saveArrivalDB()
-        })
-    }
 }

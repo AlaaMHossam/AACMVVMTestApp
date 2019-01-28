@@ -14,14 +14,15 @@ constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
 
     var flightsLiveData: MutableLiveData<FlightsData> = MutableLiveData()
 
-    fun getFlights() = CoroutineScope(Dispatchers.Default).launch {
-        val data = flightsRepository.flightsData(false)
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                flightsLiveData.value = data
+    suspend fun getFlights() =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            val data = flightsRepository.flightsData(false)
+            GlobalScope.launch {
+                withContext(Dispatchers.Main) {
+                    flightsLiveData.value = data
+                }
             }
         }
-    }
 
     suspend fun getFlightsUpdateDB() =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {

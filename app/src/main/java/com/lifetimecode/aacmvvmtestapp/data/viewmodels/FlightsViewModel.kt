@@ -23,14 +23,15 @@ constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
         }
     }
 
-    suspend fun getFlightsUpdateDB() = CoroutineScope(Dispatchers.IO).launch {
-        val data = flightsRepository.flightsData(true)
-        GlobalScope.launch {
-            withContext(Dispatchers.Main) {
-                flightsLiveData.value = data
+    suspend fun getFlightsUpdateDB() =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+            val data = flightsRepository.flightsData(true)
+            GlobalScope.launch {
+                withContext(Dispatchers.Main) {
+                    flightsLiveData.value = data
+                }
             }
         }
-    }
 
     fun getFlightsDB(): List<Arrival> = runBlocking {
         flightsRepository.getFlightsDBAsync().await()

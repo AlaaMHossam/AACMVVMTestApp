@@ -1,11 +1,15 @@
 package com.lifetimecode.aacmvvmtestapp.data.repositories
 
+import android.util.Log
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,36 +21,22 @@ constructor(
     private val arrivalDao: ArrivalDao,
     private val appExecutors: AppExecutors
 ) {
-
-   /* suspend fun flights() = {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
-            val d = webservice.getFlightsAsync().await()
-            arrivalDao.saveAllArrival(d.result.arrivals)
-        }
-    }*/
-
     suspend fun flightsData(saveDB: Boolean): FlightsData {
-        val flightsData = webservice.getFlightsAsync().await()
-        if (saveDB) arrivalDao.saveAllArrival(flightsData.result.arrivals)
-        return flightsData
+        var flightsData: FlightsData? = FlightsData()
+        try {
+            flightsData = webservice.getFlightsAsync().await()
+
+        } catch (e: Exception) {
+            Log.d("FlightsRepository", "flightsData : ")
+        }
+        if (saveDB) arrivalDao.saveAllArrival(flightsData?.result?.arrivals)
+        return flightsData!!
     }
 
     fun getFlightsDBAsync(): Deferred<List<Arrival>> {
 
         return CoroutineScope(Dispatchers.IO).async {
             arrivalDao.getAllArrival()
-        }
-    }
-
-    fun test() {
-
-        val scope = CoroutineScope(Dispatchers.IO)
-
-        scope.launch {
-            webservice.getFlightsAsync().await()
-
-            //   arrivalDao.getAllArrival().await()
         }
     }
 }

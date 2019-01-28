@@ -2,6 +2,8 @@ package com.lifetimecode.aacmvvmtestapp.data.dagger.modules
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.lifetimecode.aacmvvmtestapp.App
+import com.lifetimecode.aacmvvmtestapp.data.datasources.network.ConnectivityInterceptor
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import dagger.Module
 import dagger.Provides
@@ -13,7 +15,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 @Module
-object NetworkModule {
+class NetworkModule(private val app: App) {
 
     @Provides
     internal fun webservice(retrofit: Retrofit): Webservice {
@@ -33,6 +35,7 @@ object NetworkModule {
             .writeTimeout(10, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(interceptor)
+            .addInterceptor(ConnectivityInterceptor(app))
             .followSslRedirects(true)
             .build()
 

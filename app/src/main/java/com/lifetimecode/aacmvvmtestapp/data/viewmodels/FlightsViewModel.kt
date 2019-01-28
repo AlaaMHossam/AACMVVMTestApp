@@ -24,10 +24,10 @@ constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
             }
         }
 
-    suspend fun getFlightsUpdateDB() =
+    suspend fun getFlightsUpdateDB(handler: CoroutineExceptionHandler) =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
             val data = flightsRepository.flightsData(true)
-            GlobalScope.launch {
+            GlobalScope.launch(handler) {
                 withContext(Dispatchers.Main) {
                     flightsLiveData.value = data
                 }

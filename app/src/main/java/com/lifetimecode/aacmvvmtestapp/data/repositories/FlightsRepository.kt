@@ -23,20 +23,19 @@ constructor(
 ) {
     suspend fun flightsData(saveDB: Boolean): FlightsData {
         var flightsData: FlightsData? = FlightsData()
-        try {
+     //   try {
             flightsData = webservice.getFlightsAsync().await()
 
-        } catch (e: Exception) {
-            Log.d("FlightsRepository", "flightsData : ")
-        }
+     //   } catch (e: Exception) {
+        //    Log.d("FlightsRepository", "flightsData : ")
+       // }
+
         if (saveDB) arrivalDao.saveAllArrival(flightsData?.result?.arrivals)
         return flightsData!!
     }
 
-    fun getFlightsDBAsync(): Deferred<List<Arrival>> {
-
-        return CoroutineScope(Dispatchers.IO).async {
+    fun getFlightsDBAsync(): Deferred<List<Arrival>> =
+        CoroutineScope(Dispatchers.IO).async {
             arrivalDao.getAllArrival()
         }
-    }
 }

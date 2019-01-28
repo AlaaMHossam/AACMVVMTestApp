@@ -21,7 +21,7 @@ class App : Application(), HasActivityInjector {
 
         DaggerAppComponent.builder()
             .roomModule(RoomModule(this))
-            .networkModule(NetworkModule)
+            .networkModule(NetworkModule(this))
             .repositoriesModule(RepositoriesModule)
             .build()
             .inject(this)

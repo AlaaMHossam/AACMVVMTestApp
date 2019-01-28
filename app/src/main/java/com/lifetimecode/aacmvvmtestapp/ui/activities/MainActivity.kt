@@ -2,6 +2,7 @@ package com.lifetimecode.aacmvvmtestapp.ui.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -10,14 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
+import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityException
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -43,11 +43,22 @@ class MainActivity : AppCompatActivity() {
             rv.adapter = FlightsAdapter(it.result.arrivals)
         })
 
+
+
        // flightsViewModel.getFlightsUpdateDB()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            flightsViewModel.getFlightsUpdateDB()
+        CoroutineScope(Dispatchers.IO).launch(handler) {
+            flightsViewModel.getFlightsUpdateDB(handler)
             Log.d("MainActivity", "onCreate : ${flightsViewModel.getFlightsDB()}")
+        }
+    }
+
+    private val handler = CoroutineExceptionHandler { _, throwable ->
+      if (throwable is NoConnectivityException)
+          Log.d("MainActivity", " : ")
+        GlobalScope.launch(Dispatchers.Main) {
+
+            Toast.makeText(this@MainActivity, "No Internet Connection", Toast.LENGTH_LONG).show()
         }
     }
 

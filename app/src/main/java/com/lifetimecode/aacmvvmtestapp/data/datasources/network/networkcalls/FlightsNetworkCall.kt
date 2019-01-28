@@ -5,6 +5,7 @@ import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,13 +15,13 @@ class FlightsNetworkCall(
     private val appExecutors: AppExecutors
 ) {
 
-    private var getFlightsCall: Call<FlightsData> = webservice.getFlights()
+    private var getFlightsCall: Deferred<FlightsData> = webservice.getFlightsAsync()
 
     fun getFlights(arrivalDao: ArrivalDao?): MutableLiveData<FlightsData> {
 
         val data = MutableLiveData<FlightsData>()
 
-        getFlightsCall.enqueue(object : Callback<FlightsData> {
+        /*getFlightsCall.enqueue(object : Callback<FlightsData> {
 
             override fun onResponse(call: Call<FlightsData>, response: Response<FlightsData>) {
                 when (response.code()) {
@@ -35,7 +36,7 @@ class FlightsNetworkCall(
 
             override fun onFailure(call: Call<FlightsData>, t: Throwable) {
             }
-        })
+        })*/
         return data
     }
 }

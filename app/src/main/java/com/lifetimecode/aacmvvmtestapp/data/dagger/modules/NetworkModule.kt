@@ -1,6 +1,7 @@
 package com.lifetimecode.aacmvvmtestapp.data.dagger.modules
 
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import dagger.Module
 import dagger.Provides
@@ -39,6 +40,7 @@ object NetworkModule {
             .baseUrl("http://emadmhossam.com/CAfeeds/")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client)
             .build()
     }

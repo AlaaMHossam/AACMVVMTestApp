@@ -1,6 +1,7 @@
 package com.lifetimecode.aacmvvmtestapp.data.repositories
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
@@ -23,20 +24,25 @@ constructor(
     private val appExecutors: AppExecutors
 ) {
 
-    fun getFlightNetwork(): MutableLiveData<FlightsData> =
+   /* fun getFlightNetwork(): MutableLiveData<FlightsData> =
         FlightsNetworkCall(webservice, appExecutors).getFlights(null)
 
     fun getFlightNetworkUpdateDB(): MutableLiveData<FlightsData> =
-        FlightsNetworkCall(webservice, appExecutors).getFlights(arrivalDao)
+        FlightsNetworkCall(webservice, appExecutors).getFlights(arrivalDao)*/
 
 
-    suspend fun flights() {
-        coroutineScope {
-            launch {
-                webservice.getFlightsAsync().await()
+    suspend fun flights() = {
+        val scope = CoroutineScope(Dispatchers.IO)
+            scope.launch {
+               val d = webservice.getFlightsAsync().await()
                 Log.d("FlightsRepository", "flights : YAAAAY")
-            }
+
         }
+    }
+
+    suspend fun flights1() : FlightsData {
+
+        return webservice.getFlightsAsync().await()
     }
 
     fun test() {

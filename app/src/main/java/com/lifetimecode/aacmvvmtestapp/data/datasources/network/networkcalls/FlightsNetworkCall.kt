@@ -1,5 +1,6 @@
 package com.lifetimecode.aacmvvmtestapp.data.datasources.network.networkcalls
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
@@ -15,13 +16,13 @@ class FlightsNetworkCall(
     private val appExecutors: AppExecutors
 ) {
 
-    private var getFlightsCall: Deferred<FlightsData> = webservice.getFlightsAsync()
+ //   private var getFlightsCall: Deferred<LiveData<FlightsData>> = webservice.getFlightsAsync()
 
-    fun getFlights(arrivalDao: ArrivalDao?): MutableLiveData<FlightsData> {
+  /*  fun getFlights(arrivalDao: ArrivalDao?): MutableLiveData<FlightsData> {
 
         val data = MutableLiveData<FlightsData>()
 
-        /*getFlightsCall.enqueue(object : Callback<FlightsData> {
+        *//*getFlightsCall.enqueue(object : Callback<FlightsData> {
 
             override fun onResponse(call: Call<FlightsData>, response: Response<FlightsData>) {
                 when (response.code()) {
@@ -36,7 +37,7 @@ class FlightsNetworkCall(
 
             override fun onFailure(call: Call<FlightsData>, t: Throwable) {
             }
-        })*/
+        })*//*
         return data
-    }
+    }*/
 }

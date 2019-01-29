@@ -1,6 +1,5 @@
 package com.lifetimecode.aacmvvmtestapp.ui.activities
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -17,9 +16,6 @@ import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityEx
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
-import com.lifetimecode.aacmvvmtestapp.ui.fragments.DashboardFragment
-import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
-import com.lifetimecode.aacmvvmtestapp.ui.fragments.NotificationsFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -28,13 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(),
-    HomeFragment.OnFragmentInteractionListener,
-    DashboardFragment.OnFragmentInteractionListener,
-    NotificationsFragment.OnFragmentInteractionListener {
-
-    override fun onFragmentInteraction(uri: Uri) {
-    }
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

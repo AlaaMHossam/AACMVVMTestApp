@@ -17,7 +17,10 @@ import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -43,10 +46,6 @@ class MainActivity : AppCompatActivity() {
             rv.adapter = FlightsAdapter(it.result.arrivals)
         })
 
-
-
-       // flightsViewModel.getFlightsUpdateDB()
-
         CoroutineScope(Dispatchers.IO).launch(handler) {
             flightsViewModel.getFlightsUpdateDB(handler)
             Log.d("MainActivity", "onCreate : ${flightsViewModel.getFlightsDB()}")
@@ -54,12 +53,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
-      if (throwable is NoConnectivityException)
-          Log.d("MainActivity", " : ")
-        GlobalScope.launch(Dispatchers.Main) {
-
-            Toast.makeText(this@MainActivity, "No Internet Connection", Toast.LENGTH_LONG).show()
-        }
+        if (throwable is NoConnectivityException)
+            CoroutineScope(Dispatchers.Main).launch {
+                Toast.makeText(this@MainActivity, "No Internet Connection", Toast.LENGTH_LONG).show()
+            }
     }
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->

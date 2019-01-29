@@ -1,6 +1,5 @@
 package com.lifetimecode.aacmvvmtestapp.data.repositories
 
-import android.util.Log
 import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
@@ -22,16 +21,9 @@ constructor(
     private val appExecutors: AppExecutors
 ) {
     suspend fun flightsData(saveDB: Boolean): FlightsData {
-        var flightsData: FlightsData? = FlightsData()
-     //   try {
-            flightsData = webservice.getFlightsAsync().await()
-
-     //   } catch (e: Exception) {
-        //    Log.d("FlightsRepository", "flightsData : ")
-       // }
-
-        if (saveDB) arrivalDao.saveAllArrival(flightsData?.result?.arrivals)
-        return flightsData!!
+        val flightsData = webservice.getFlightsAsync().await()
+        if (saveDB) arrivalDao.saveAllArrival(flightsData.result.arrivals)
+        return flightsData
     }
 
     fun getFlightsDBAsync(): Deferred<List<Arrival>> =

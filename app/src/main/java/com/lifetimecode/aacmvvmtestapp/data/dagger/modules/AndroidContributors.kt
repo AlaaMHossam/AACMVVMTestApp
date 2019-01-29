@@ -1,12 +1,11 @@
 package com.lifetimecode.aacmvvmtestapp.data.dagger.modules
 
-import android.app.Application
-import com.lifetimecode.aacmvvmtestapp.App
 import com.lifetimecode.aacmvvmtestapp.ui.activities.MainActivity
-import dagger.Binds
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.DashboardFragment
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.NotificationsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import javax.inject.Singleton
 
 @Module
 abstract class AndroidContributors {

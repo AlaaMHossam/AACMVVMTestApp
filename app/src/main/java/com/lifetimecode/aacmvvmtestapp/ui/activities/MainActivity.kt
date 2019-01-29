@@ -1,5 +1,6 @@
 package com.lifetimecode.aacmvvmtestapp.ui.activities
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,13 +9,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lifetimecode.aacmvvmtestapp.R
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityException
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.ActivityMainBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.DashboardFragment
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.NotificationsFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -23,7 +28,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    HomeFragment.OnFragmentInteractionListener,
+    DashboardFragment.OnFragmentInteractionListener,
+    NotificationsFragment.OnFragmentInteractionListener {
+
+    override fun onFragmentInteraction(uri: Uri) {
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -35,8 +46,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         flightsViewModel =
             ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
@@ -50,6 +59,9 @@ class MainActivity : AppCompatActivity() {
             flightsViewModel.getFlightsUpdateDB(handler)
             Log.d("MainActivity", "onCreate : ${flightsViewModel.getFlightsDB()}")
         }
+
+        val navController = findNavController(R.id.nav_host_fragment)
+        navigation.setupWithNavController(navController)
     }
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
@@ -59,18 +71,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
+    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
+
 }

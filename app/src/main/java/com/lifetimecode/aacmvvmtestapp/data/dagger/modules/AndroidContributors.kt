@@ -12,4 +12,7 @@ abstract class AndroidContributors {
 
     @ContributesAndroidInjector
     internal abstract fun mainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun homeFragment(): HomeFragment
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lifetimecode.aacmvvmtestapp.R
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityException
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
@@ -27,12 +28,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var flightsViewModel: FlightsViewModel
+    private lateinit var flightsViewModel: FlightsViewModel
 
     private val arrivalsList: MutableList<Arrival> = mutableListOf()
 
@@ -41,18 +43,17 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentHomeBinding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        initStuff()
-
-        return fragmentHomeBinding.root
-    }
-
-
-    private fun initStuff() {
 
         flightsViewModel = activity.run {
             ViewModelProviders.of(this!!, viewModelFactory)[FlightsViewModel::class.java]
         }
 
+        fetchData()
+
+        return fragmentHomeBinding.root
+    }
+
+    private fun fetchData() {
         CoroutineScope(Dispatchers.IO).launch(handler) {
             flightsViewModel.getFlights(handler)
             Log.d("MainActivity", "onCreate : ${flightsViewModel.getFlightsDB()}")
@@ -62,12 +63,16 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        srl_home_flights.isRefreshing = true
+        srl_home_flights.setOnRefreshListener(this)
+
         rv_home_flights.let {
             it.layoutManager = LinearLayoutManager(activity)
             it.adapter = adapter
         }
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
+            srl_home_flights.isRefreshing = false
             arrivalsList.clear()
             arrivalsList.addAll(it.result.arrivals)
             adapter.notifyDataSetChanged()
@@ -77,13 +82,17 @@ class HomeFragment : Fragment() {
     private val handler = CoroutineExceptionHandler { _, throwable ->
         if (throwable is NoConnectivityException)
             CoroutineScope(Dispatchers.Main).launch {
+                srl_home_flights.isRefreshing = false
                 Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_LONG).show()
             }
     }
 
     fun onFlightClicked(arrival: Arrival) {
-    //    Log.d("HomeFragment", "onSaveClick : $view")
-         Log.d("HomeFragment", "onSaveClick : ${arrival.airlineName}")
+        Log.d("HomeFragment", "onFlightClicked : ${arrival.airlineName}")
+    }
+
+    override fun onRefresh() {
+        fetchData()
     }
 
     override fun onAttach(context: Context) {

@@ -1,6 +1,5 @@
 package com.lifetimecode.aacmvvmtestapp.data.repositories
 
-import com.lifetimecode.aacmvvmtestapp.data.dagger.modules.AppExecutors
 import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
@@ -16,8 +15,7 @@ class FlightsRepository
 @Inject
 constructor(
     private val webservice: Webservice,
-    private val arrivalDao: ArrivalDao,
-    private val appExecutors: AppExecutors
+    private val arrivalDao: ArrivalDao
 ) {
     suspend fun flightsData(saveDB: Boolean): FlightsData {
         val flightsData = webservice.getFlightsAsync().await()

@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
-import kotlinx.coroutines.Deferred
 
 @Dao
 interface ArrivalDao {

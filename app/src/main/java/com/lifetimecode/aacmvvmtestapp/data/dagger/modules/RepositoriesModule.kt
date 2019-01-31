@@ -12,8 +12,7 @@ object RepositoriesModule {
     @Provides
     internal fun flightsRepository(
         webservice: Webservice,
-        arrivalDao: ArrivalDao,
-        appExecutors: AppExecutors
+        arrivalDao: ArrivalDao
     ):
-            FlightsRepository = FlightsRepository(webservice, arrivalDao, appExecutors)
+            FlightsRepository = FlightsRepository(webservice, arrivalDao)
 }

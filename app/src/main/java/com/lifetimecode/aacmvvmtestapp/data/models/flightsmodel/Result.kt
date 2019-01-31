@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Result(
     @SerializedName("arrivals")
-    var arrivals: List<Arrival> = listOf(),
+    val arrivals: List<Arrival> = listOf(),
     @SerializedName("departures")
-    var departures: List<Departure> = listOf()
+    val departures: List<Departure> = listOf()
 )

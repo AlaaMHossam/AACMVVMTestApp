@@ -8,15 +8,15 @@ import com.google.gson.annotations.SerializedName
 data class Arrival(
     @PrimaryKey
     @SerializedName("flight_id")
-    var flightId: String = "",
+    val flightId: String = "",
     @SerializedName("flight_no")
-    var flightNo: String = "",
+    val flightNo: String = "",
     @SerializedName("airline_name")
-    var airlineName: String = "",
+    val airlineName: String = "",
     @SerializedName("time")
-    var time: String = "",
+    val time: String = "",
     @SerializedName("city_from")
-    var cityFrom: String = "",
+    val cityFrom: String = "",
     @SerializedName("status")
-    var status: String = ""
+    val status: String = ""
 )

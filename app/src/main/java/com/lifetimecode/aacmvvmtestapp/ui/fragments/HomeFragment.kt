@@ -30,7 +30,6 @@ import javax.inject.Inject
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -55,8 +54,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun fetchData() {
         CoroutineScope(Dispatchers.IO).launch(handler) {
-            flightsViewModel.getFlights(handler)
-            Log.d("MainActivity", "onCreate : ${flightsViewModel.getFlightsDB()}")
+            flightsViewModel.getFlights(handler,true)
+            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()}")
         }
     }
 

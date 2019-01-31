@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class FlightsData(
     @SerializedName("result")
-    var result: Result = Result()
+    val result: Result = Result()
 )

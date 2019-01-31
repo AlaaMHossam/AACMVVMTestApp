@@ -1,6 +1,7 @@
 package com.lifetimecode.aacmvvmtestapp.ui.fragments
 
 import android.content.Context
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lifetimecode.aacmvvmtestapp.R
@@ -54,7 +56,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun fetchData() {
         CoroutineScope(Dispatchers.IO).launch(handler) {
-            flightsViewModel.getFlights(handler,true)
+            flightsViewModel.getFlights(handler, true)
             Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()}")
         }
     }
@@ -66,7 +68,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         srl_home_flights.setOnRefreshListener(this)
 
         rv_home_flights.let {
-            it.layoutManager = LinearLayoutManager(activity)
+            if (activity?.resources?.configuration?.orientation == ORIENTATION_PORTRAIT)
+                it.layoutManager = LinearLayoutManager(activity)
+            else it.layoutManager = GridLayoutManager(activity, 2)
+
             it.adapter = adapter
         }
 

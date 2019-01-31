@@ -2,13 +2,14 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="flightData"
-                  type="com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival"/>
+        <variable name="homeFragment"
+                  type="com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent" android:layout_height="wrap_content">

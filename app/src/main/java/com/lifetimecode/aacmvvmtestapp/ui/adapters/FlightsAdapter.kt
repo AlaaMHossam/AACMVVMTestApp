@@ -8,6 +8,7 @@ import com.lifetimecode.aacmvvmtestapp.R
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.databinding.FlightsListItemBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter.ViewHolder
+import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
 
 class FlightsAdapter(private val arrivalsList: List<Arrival>) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -30,6 +31,7 @@ class FlightsAdapter(private val arrivalsList: List<Arrival>) : RecyclerView.Ada
 
         fun bind(arrival: Arrival) {
             flightsListItemBinding.flightsListItem = arrival
+            flightsListItemBinding.clickHandler = HomeFragment()
             flightsListItemBinding.executePendingBindings()
         }
     }

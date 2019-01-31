@@ -41,11 +41,11 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentHomeBinding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
         initStuff()
 
         return fragmentHomeBinding.root
     }
+
 
     private fun initStuff() {
 
@@ -81,10 +81,9 @@ class HomeFragment : Fragment() {
             }
     }
 
-    fun onSaveClick(view: View){
-        Log.d("HomeFragment", "onSaveClick : $view")
-       // Log.d("HomeFragment", "onSaveClick : $arrival")
-       // Toast.makeText(activity, arrival.airlineName, Toast.LENGTH_LONG).show()
+    fun onFlightClicked(arrival: Arrival) {
+    //    Log.d("HomeFragment", "onSaveClick : $view")
+         Log.d("HomeFragment", "onSaveClick : ${arrival.airlineName}")
     }
 
     override fun onAttach(context: Context) {

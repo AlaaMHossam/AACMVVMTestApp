@@ -11,14 +11,8 @@
             android:layout_height="match_parent">
         <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-        >
-            <!--    <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:toolbarId="@+id/toolbar"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:contentScrim="?attr/colorPrimary">-->
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_height="?attr/actionBarSize"
@@ -26,7 +20,6 @@
                     app:title="@string/title_home"
                     app:layout_scrollFlags="scroll|enterAlways">
             </androidx.appcompat.widget.Toolbar>
-            <!--  </com.google.android.material.appbar.CollapsingToolbarLayout>-->
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView

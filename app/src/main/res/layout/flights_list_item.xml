@@ -3,11 +3,13 @@
     <data>
         <variable name="flightsListItem"
                   type="com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival"/>
+        <variable name="clickListener" type="com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment"/>
     </data>
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="vertical">
-
+                  android:orientation="vertical"
+                  android:onClick="@{clickListener::onSaveClick}">
+        <!--              android:onClick="@{(view) -> clickListener.onSaveClick(view, flightsListItem)}"-->
 
         <TextView
                 android:layout_width="match_parent"

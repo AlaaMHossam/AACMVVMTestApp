@@ -6,9 +6,8 @@ import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,8 +25,8 @@ constructor(
         return flightsData
     }
 
-    fun getFlightsDBAsync(): Deferred<List<Arrival>> =
-        CoroutineScope(Dispatchers.IO).async {
+    suspend fun getFlightsDB(): List<Arrival> =
+        withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
             arrivalDao.getAllArrival()
         }
 }

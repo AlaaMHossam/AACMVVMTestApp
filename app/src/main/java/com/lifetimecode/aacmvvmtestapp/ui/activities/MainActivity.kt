@@ -23,6 +23,15 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initViewModels()
+        initNavigation()
+    }
+
+    private fun initViewModels() {
+
+    }
+
+    private fun initNavigation() {
         val navController = findNavController(R.id.nav_host_fragment)
         navigation.setupWithNavController(navController)
     }
@@ -31,6 +40,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return this.fragmentInjector
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
+    //  override fun onSupportNavigateUp() = findNavController(R.id.nav_host_fragment).navigateUp()
 
 }

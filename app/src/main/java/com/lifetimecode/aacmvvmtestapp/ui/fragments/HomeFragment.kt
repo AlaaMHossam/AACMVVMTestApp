@@ -34,9 +34,9 @@ class HomeFragment : Fragment() {
 
     lateinit var flightsViewModel: FlightsViewModel
 
-    val arrivalsList: MutableList<Arrival> = mutableListOf()
+    private val arrivalsList: MutableList<Arrival> = mutableListOf()
 
-    val adapter: FlightsAdapter = FlightsAdapter(arrivalsList)
+    private val adapter: FlightsAdapter = FlightsAdapter(arrivalsList)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentHomeBinding: FragmentHomeBinding =
@@ -47,9 +47,11 @@ class HomeFragment : Fragment() {
         return fragmentHomeBinding.root
     }
 
-    private fun initStuff(){
-        flightsViewModel =
-            ViewModelProviders.of(this, viewModelFactory)[FlightsViewModel::class.java]
+    private fun initStuff() {
+
+        flightsViewModel = activity.run {
+            ViewModelProviders.of(this!!, viewModelFactory)[FlightsViewModel::class.java]
+        }
 
         CoroutineScope(Dispatchers.IO).launch(handler) {
             flightsViewModel.getFlights(handler)
@@ -60,10 +62,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv_home_flights.adapter = adapter
+        rv_home_flights.let {
+            it.layoutManager = LinearLayoutManager(activity)
+            it.adapter = adapter
+        }
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
-            rv_home_flights.layoutManager = LinearLayoutManager(activity)
             arrivalsList.clear()
             arrivalsList.addAll(it.result.arrivals)
             adapter.notifyDataSetChanged()
@@ -75,6 +79,12 @@ class HomeFragment : Fragment() {
             CoroutineScope(Dispatchers.Main).launch {
                 Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_LONG).show()
             }
+    }
+
+    fun onSaveClick(view: View){
+        Log.d("HomeFragment", "onSaveClick : $view")
+       // Log.d("HomeFragment", "onSaveClick : $arrival")
+       // Toast.makeText(activity, arrival.airlineName, Toast.LENGTH_LONG).show()
     }
 
     override fun onAttach(context: Context) {

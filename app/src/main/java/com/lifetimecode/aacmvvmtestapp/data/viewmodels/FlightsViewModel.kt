@@ -31,7 +31,7 @@ constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
         }
 
     fun getFlightsDB(): List<Arrival> = runBlocking {
-        flightsRepository.getFlightsDBAsync().await()
+        flightsRepository.getFlightsDB()
     }
 
     fun saveFlightsDB() {

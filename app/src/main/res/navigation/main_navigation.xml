@@ -4,11 +4,18 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main_navigation"
             app:startDestination="@id/navigation_home">
     <fragment android:id="@+id/navigation_home" android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment"
-              android:label="fragment_home" tools:layout="@layout/fragment_home"/>
+              android:label="fragment_home" tools:layout="@layout/fragment_home">
+        <action android:id="@+id/action_navigation_home_to_flightDetails" app:destination="@id/flightDetails"/>
+    </fragment>
     <fragment android:id="@+id/navigation_dashboard"
               android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.DashboardFragment"
               android:label="fragment_dashboard" tools:layout="@layout/fragment_dashboard"/>
     <fragment android:id="@+id/navigation_notifications"
               android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.NotificationsFragment"
               android:label="fragment_notifications" tools:layout="@layout/fragment_notifications"/>
+    <activity android:id="@+id/flightDetails" android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.FlightDetails"
+              android:label="fragment_flight_details" tools:layout="@layout/activity_flight_details">
+        <argument android:name="FlightData"
+                  app:argType="com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival"/>
+    </activity>
 </navigation>

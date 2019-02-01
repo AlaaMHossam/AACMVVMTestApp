@@ -33,6 +33,13 @@ class FlightsAdapter : RecyclerView.Adapter<ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    /*fun updateList(newList: List<Arrival>) {
+        val diffResult = DiffUtil.calculateDiff(Diff(newList, arrivalsList))
+        arrivalsList.clear()
+        arrivalsList.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
+    }*/
+
     inner class ViewHolder(private val flightsListItemBinding: FlightsListItemBinding) :
         RecyclerView.ViewHolder(flightsListItemBinding.root) {
 

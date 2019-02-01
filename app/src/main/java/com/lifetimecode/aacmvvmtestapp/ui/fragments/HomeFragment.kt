@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -46,6 +47,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+        initViewModel()
+        fetchData()
+    }
+
+    private fun initUI() {
         srl_home_flights.apply {
             isRefreshing = true
             setOnRefreshListener(this@HomeFragment)
@@ -58,19 +65,16 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
             it.adapter = FlightsAdapter()
         }
-
-        initViewModel()
-
-        fetchData()
     }
 
-    private fun initViewModel(){
+    private fun initViewModel() {
         flightsViewModel = activity.run {
             ViewModelProviders.of(this!!, viewModelFactory)[FlightsViewModel::class.java]
         }
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
             srl_home_flights.isRefreshing = false
+            // (rv_home_flights.adapter as FlightsAdapter).updateList(it.result.arrivals)
             (rv_home_flights.adapter as FlightsAdapter).updateAdapter(it.result.arrivals)
         })
     }
@@ -90,8 +94,21 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
     }
 
-    fun onFlightClicked(arrival: Arrival) {
-        Log.d("HomeFragment", "onFlightClicked : ${arrival.airlineName}")
+    fun onFlightClicked(view: View, arrival: Arrival) {
+        // Fragment stuff
+        /*  val directions =
+              HomeFragmentDirections.actionNavigationHomeToFlightDetails(arrival)
+          Navigation.findNavController(view).navigate(directions)*/
+
+        // Activity stuff
+        val directions =
+                HomeFragmentDirections.actionNavigationHomeToFlightDetails(arrival)
+        Navigation.findNavController(view).navigate(directions)
+
+        /*val b = Bundle()
+        b.putParcelable("flightsData", arrival)
+        Navigation.findNavController(view).navigate(R.id.flightDetails, b)*/
+
     }
 
     override fun onRefresh() {

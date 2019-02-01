@@ -10,7 +10,9 @@ import com.lifetimecode.aacmvvmtestapp.databinding.FlightsListItemBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter.ViewHolder
 import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
 
-class FlightsAdapter(private val arrivalsList: List<Arrival>) : RecyclerView.Adapter<ViewHolder>() {
+class FlightsAdapter : RecyclerView.Adapter<ViewHolder>() {
+
+    private var arrivalsList: List<Arrival> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -25,6 +27,11 @@ class FlightsAdapter(private val arrivalsList: List<Arrival>) : RecyclerView.Ada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(arrivalsList[position])
 
     override fun getItemCount(): Int = arrivalsList.size
+
+    fun updateAdapter(dataList: List<Arrival>){
+        arrivalsList = dataList
+        this.notifyDataSetChanged()
+    }
 
     inner class ViewHolder(private val flightsListItemBinding: FlightsListItemBinding) :
         RecyclerView.ViewHolder(flightsListItemBinding.root) {

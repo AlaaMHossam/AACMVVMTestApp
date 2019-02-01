@@ -37,10 +37,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var flightsViewModel: FlightsViewModel
 
-    private val arrivalsList: MutableList<Arrival> = mutableListOf()
-
-    private val adapter: FlightsAdapter = FlightsAdapter(arrivalsList)
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentHomeBinding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -72,14 +68,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 it.layoutManager = LinearLayoutManager(activity)
             else it.layoutManager = GridLayoutManager(activity, 2)
 
-            it.adapter = adapter
+            it.adapter = FlightsAdapter()
         }
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
             srl_home_flights.isRefreshing = false
-            arrivalsList.clear()
-            arrivalsList.addAll(it.result.arrivals)
-            adapter.notifyDataSetChanged()
+            (rv_home_flights.adapter as FlightsAdapter).updateAdapter(it.result.arrivals)
         })
     }
 

@@ -30,7 +30,7 @@ class FlightsAdapter : RecyclerView.Adapter<ViewHolder>() {
 
     fun updateAdapter(dataList: List<Arrival>){
         arrivalsList = dataList
-        this.notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val flightsListItemBinding: FlightsListItemBinding) :

@@ -40,28 +40,16 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val fragmentHomeBinding: FragmentHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
-        flightsViewModel = activity.run {
-            ViewModelProviders.of(this!!, viewModelFactory)[FlightsViewModel::class.java]
-        }
-
-        fetchData()
-
         return fragmentHomeBinding.root
-    }
-
-    private fun fetchData() {
-        CoroutineScope(Dispatchers.IO).launch(handler) {
-            flightsViewModel.getFlights(handler, true)
-            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()}")
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        srl_home_flights.isRefreshing = true
-        srl_home_flights.setOnRefreshListener(this)
+        srl_home_flights.apply {
+            isRefreshing = true
+            setOnRefreshListener(this@HomeFragment)
+        }
 
         rv_home_flights.let {
             if (activity?.resources?.configuration?.orientation == ORIENTATION_PORTRAIT)
@@ -69,6 +57,16 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             else it.layoutManager = GridLayoutManager(activity, 2)
 
             it.adapter = FlightsAdapter()
+        }
+
+        initViewModel()
+
+        fetchData()
+    }
+
+    private fun initViewModel(){
+        flightsViewModel = activity.run {
+            ViewModelProviders.of(this!!, viewModelFactory)[FlightsViewModel::class.java]
         }
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
@@ -83,6 +81,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 srl_home_flights.isRefreshing = false
                 Toast.makeText(activity, "No Internet Connection", Toast.LENGTH_LONG).show()
             }
+    }
+
+    private fun fetchData() {
+        CoroutineScope(Dispatchers.IO).launch(handler) {
+            flightsViewModel.getFlights(handler, true)
+            Log.d("MainActivity", "onCreate : ${flightsViewModel.getArrivalDB()}")
+        }
     }
 
     fun onFlightClicked(arrival: Arrival) {

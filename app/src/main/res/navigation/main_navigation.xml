@@ -5,7 +5,7 @@
             app:startDestination="@id/navigation_home">
     <fragment android:id="@+id/navigation_home" android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment"
               android:label="fragment_home" tools:layout="@layout/fragment_home">
-        <action android:id="@+id/action_navigation_home_to_flightDetails" app:destination="@id/flightDetails"/>
+        <action android:id="@+id/action_start_flightDetails" app:destination="@id/flightDetails"/>
     </fragment>
     <fragment android:id="@+id/navigation_dashboard"
               android:name="com.lifetimecode.aacmvvmtestapp.ui.fragments.DashboardFragment"

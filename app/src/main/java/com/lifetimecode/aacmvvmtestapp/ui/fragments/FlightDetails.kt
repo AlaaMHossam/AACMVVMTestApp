@@ -13,11 +13,5 @@ class FlightDetails : AppCompatActivity() {
 
         val safeArgs = FlightDetailsArgs.fromBundle(intent?.extras!!).flightData
         Log.d("FlightDetails", "onCreate : $safeArgs")
-
-        // Fragment stuff
-        /* arguments?.let {
-             val safeArgs = FlightDetailsArgs.fromBundle(it)
-             Log.d("FlightDetails", "onViewCreated : ${safeArgs.flightData}")
-         }*/
     }
 }

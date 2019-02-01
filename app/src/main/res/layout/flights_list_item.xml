@@ -14,7 +14,8 @@
                 android:layout_width="match_parent"
                 android:text="@{flightsListItem.flightId}"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_flight_no">
+                android:id="@+id/tv_flight_no"
+                android:textColor='@{flightsListItem.status.equals("Landed") || flightsListItem.status.equals("Active") ? @color/colorPrimary : @color/colorAccent}'>
         </TextView>
         <TextView
                 android:layout_width="match_parent"

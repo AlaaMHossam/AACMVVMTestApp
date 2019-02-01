@@ -95,20 +95,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     fun onFlightClicked(view: View, arrival: Arrival) {
-        // Fragment stuff
-        /*  val directions =
-              HomeFragmentDirections.actionNavigationHomeToFlightDetails(arrival)
-          Navigation.findNavController(view).navigate(directions)*/
 
-        // Activity stuff
         val directions =
-                HomeFragmentDirections.actionNavigationHomeToFlightDetails(arrival)
+                HomeFragmentDirections.actionStartFlightDetails(arrival)
         Navigation.findNavController(view).navigate(directions)
-
-        /*val b = Bundle()
-        b.putParcelable("flightsData", arrival)
-        Navigation.findNavController(view).navigate(R.id.flightDetails, b)*/
-
     }
 
     override fun onRefresh() {

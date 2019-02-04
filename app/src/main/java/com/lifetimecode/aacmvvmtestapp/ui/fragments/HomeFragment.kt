@@ -8,15 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.transition.TransitionManager
 import com.lifetimecode.aacmvvmtestapp.R
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityException
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
@@ -96,9 +98,44 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     fun onFlightClicked(view: View, arrival: Arrival) {
 
-        val directions =
-                HomeFragmentDirections.actionStartFlightDetails(arrival)
-        Navigation.findNavController(view).navigate(directions)
+        if (view.tag == "expanded")
+            animationCollapse(view)
+        else animationExpand(view)
+
+        //   TransitionManager
+        /*val directions =
+            HomeFragmentDirections.actionStartFlightDetails(arrival)
+        Navigation.findNavController(view).navigate(directions)*/
+    }
+
+    fun animationExpand(view: View) {
+
+        view.tag = "expanded"
+
+        val layout = view as ConstraintLayout
+
+        val collapsed = ConstraintSet()
+        val expanded = ConstraintSet()
+        collapsed.clone(layout)
+        expanded.clone(layout.context, R.layout.flights_list_item_expanded)
+
+        TransitionManager.beginDelayedTransition(layout)
+        expanded.applyTo(layout)
+    }
+
+    fun animationCollapse(view: View) {
+
+        view.tag = ""
+
+        val layout = view as ConstraintLayout
+
+        val collapsed = ConstraintSet()
+        val expanded = ConstraintSet()
+        expanded.clone(layout)
+        collapsed.clone(layout.context, R.layout.flights_list_item)
+
+        TransitionManager.beginDelayedTransition(layout)
+        collapsed.applyTo(layout)
     }
 
     override fun onRefresh() {

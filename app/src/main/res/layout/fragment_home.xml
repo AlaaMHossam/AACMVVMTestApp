@@ -23,7 +23,6 @@
                     app:layout_scrollFlags="scroll|enterAlways">
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,6 +33,21 @@
                     android:layout_height="match_parent"
                     tools:context=".ui.fragments.HomeFragment">
 
+                <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/textView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="24dp" android:layout_marginTop="24dp"
+                        app:layout_constraintTop_toTopOf="parent" android:background="@drawable/bg_card"
+                        android:padding="2dp"/>
+
+             <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@drawable/bg_card">
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                         android:id="@+id/srl_home_flights"
                         android:layout_width="match_parent"
@@ -50,7 +64,8 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            android:id="@+id/rv_home_flights" tools:listitem="@layout/flights_list_item"/>
+                            android:id="@+id/rv_home_flights" tools:listitem="@layout/flights_list_item"
+                            android:background="@drawable/ic_launcher_background"/>
                 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

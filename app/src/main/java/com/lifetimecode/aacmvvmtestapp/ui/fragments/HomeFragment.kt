@@ -1,6 +1,5 @@
 package com.lifetimecode.aacmvvmtestapp.ui.fragments
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -26,13 +24,11 @@ import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.FragmentHomeBinding
 import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.android.synthetic.main.flights_list_item.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

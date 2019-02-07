@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,6 +32,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 import javax.inject.Inject
 
 class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -96,48 +98,13 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         }
     }
 
-    fun onFlightClicked(view: View, arrival: Arrival) {
+    fun onFlightClicked(view: View, arrival: Arrival, position: Int) {
 
-        //   rv_home_flights.adapter?.notifyItemChanged(view.verticalScrollbarPosition)
-        if (view.tag == "expanded")
-            animationCollapse(view)
-        else animationExpand(view)
+        Log.d("HomeFragment", "onFlightClicked : $position")
 
-        /*val directions =
+        val directions =
             HomeFragmentDirections.actionStartFlightDetails(arrival)
-        Navigation.findNavController(view).navigate(directions)*/
-    }
-
-    private fun animationExpand(view: View) {
-
-        view.tag = "expanded"
-
-        ObjectAnimator.ofFloat(view.cl_flight_list_details_holder, View.TRANSLATION_Y, 1f, 10f).setDuration(300).start()
-        rv_home_flights.adapter?.notifyItemChanged((rv_home_flights.adapter as FlightsAdapter).itemPosition)
-
-       /* view.cl_flight_list_details_holder
-            .animate()
-            .translationY(10f)
-            .setDuration(300)
-            .setInterpolator(OvershootInterpolator(1.5f))
-            .start()*/
-
-        view.tv_flight_list_details.visibility = View.VISIBLE
-    }
-
-    private fun animationCollapse(view: View) {
-
-        view.tag = ""
-
-        view.cl_flight_list_details_holder
-            .animate()
-            .translationY(-10f)
-            .setDuration(300)
-            .setInterpolator(OvershootInterpolator(1.5f))
-            .start()
-
-        view.tv_flight_list_details.visibility = View.GONE
-
+        Navigation.findNavController(view).navigate(directions)
     }
 
     override fun onRefresh() {

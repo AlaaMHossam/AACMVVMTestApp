@@ -3,6 +3,7 @@ package com.lifetimecode.aacmvvmtestapp.data.dagger.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
+import com.lifetimecode.aacmvvmtestapp.data.viewmodels.UserViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -37,6 +38,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FlightsViewModel::class)
     internal abstract fun flightsViewModel(flightsViewModel: FlightsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserViewModel::class)
+    internal abstract fun userViewModel(userViewModel: UserViewModel): ViewModel
 
     //Add more ViewModels here
 }

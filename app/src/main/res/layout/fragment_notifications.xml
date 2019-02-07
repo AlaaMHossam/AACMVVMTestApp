@@ -3,13 +3,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-                name="focusListener"
-                type="com.lifetimecode.aacmvvmtestapp.data.viewmodels.UserViewModel"/>
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,7 +41,6 @@
                     android:inputType="textEmailAddress"
                     android:backgroundTint="#fff"
                     android:background="@null"
-                    app:onFocusChange="@{focusListener.onFocusChangeListener}"
                     android:textColor="@android:color/white"
                     android:id="@+id/tiet_notif_email"
                     android:cursorVisible="false"/>
@@ -75,14 +67,12 @@
                 app:boxBackgroundColor="@null"
                 android:textColorHint="@color/mtrl_on_primary_emphasis_medium"
                 app:hintTextColor="@color/text_input_selector"
-
                 app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/colorPrimary"
-
                     android:backgroundTint="#fff"
                     android:background="@null"
                     android:textColor="@android:color/white"

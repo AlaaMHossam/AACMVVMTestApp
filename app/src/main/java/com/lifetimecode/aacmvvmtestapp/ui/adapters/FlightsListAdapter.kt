@@ -11,8 +11,8 @@ import com.lifetimecode.aacmvvmtestapp.databinding.FlightsListItemBinding
 import com.lifetimecode.aacmvvmtestapp.ui.fragments.HomeFragment
 import com.lifetimecode.aacmvvmtestapp.utilities.DiffCallBacks
 
-class FlightsListAdapter : ListAdapter<Arrival,
-        FlightsListAdapter.FlightsViewHolder>(DiffCallBacks.ArrivalsDiffCallback()) {
+class FlightsListAdapter :
+    ListAdapter<Arrival, FlightsListAdapter.FlightsViewHolder>(DiffCallBacks.ArrivalsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FlightsViewHolder {
         val inflater = LayoutInflater.from(parent.context)

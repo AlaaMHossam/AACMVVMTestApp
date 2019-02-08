@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.lifetimecode.aacmvvmtestapp.R
-import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.UserViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_notifications.*

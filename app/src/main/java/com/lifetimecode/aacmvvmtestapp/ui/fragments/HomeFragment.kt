@@ -74,8 +74,6 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         flightsViewModel.flightsLiveData.observe(this, Observer {
             srl_home_flights.isRefreshing = false
-            // (rv_home_flights.adapter as FlightsAdapter).updateList(it.result.arrivals)
-            // (rv_home_flights.adapter as FlightsAdapter).updateAdapter(it.result.arrivals)
             (rv_home_flights.adapter as FlightsListAdapter).submitList(it.result.arrivals)
         })
     }

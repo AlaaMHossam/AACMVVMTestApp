@@ -22,7 +22,7 @@ import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityEx
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.FragmentHomeBinding
-import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsAdapter
+import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsListAdapter
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -63,7 +63,7 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 it.layoutManager = LinearLayoutManager(activity)
             else it.layoutManager = GridLayoutManager(activity, 2)
 
-            it.adapter = FlightsAdapter()
+            it.adapter = FlightsListAdapter()
         }
     }
 
@@ -75,7 +75,8 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         flightsViewModel.flightsLiveData.observe(this, Observer {
             srl_home_flights.isRefreshing = false
             // (rv_home_flights.adapter as FlightsAdapter).updateList(it.result.arrivals)
-            (rv_home_flights.adapter as FlightsAdapter).updateAdapter(it.result.arrivals)
+            // (rv_home_flights.adapter as FlightsAdapter).updateAdapter(it.result.arrivals)
+            (rv_home_flights.adapter as FlightsListAdapter).submitList(it.result.arrivals)
         })
     }
 

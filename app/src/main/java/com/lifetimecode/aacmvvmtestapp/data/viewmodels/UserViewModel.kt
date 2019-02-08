@@ -3,7 +3,6 @@ package com.lifetimecode.aacmvvmtestapp.data.viewmodels
 import androidx.lifecycle.ViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.lifetimecode.aacmvvmtestapp.data.repositories.FlightsRepository
 import javax.inject.Inject
 
 class UserViewModel

@@ -12,7 +12,7 @@ class FlightsViewModel
 @Inject
 constructor(private var flightsRepository: FlightsRepository) : ViewModel() {
 
-    var flightsLiveData: MutableLiveData<FlightsData> = MutableLiveData()
+    val flightsLiveData: MutableLiveData<FlightsData> = MutableLiveData()
 
     suspend fun getFlights(handler: CoroutineExceptionHandler, saveDB: Boolean) =
         withContext(CoroutineScope(Dispatchers.IO).coroutineContext + handler) {

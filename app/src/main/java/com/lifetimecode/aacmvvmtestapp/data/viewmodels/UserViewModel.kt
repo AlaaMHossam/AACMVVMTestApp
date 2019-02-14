@@ -10,7 +10,7 @@ class UserViewModel
 constructor() : ViewModel() {
 
     fun emailFocusChangedListener(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
-        textInputEditText.setOnFocusChangeListener { view, hasFocus ->
+        textInputEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus)
                 textInputLayout.hint = "Your Name"
             else if (!hasFocus && textInputEditText.text?.isEmpty()!!)
@@ -19,7 +19,7 @@ constructor() : ViewModel() {
     }
 
     fun passwordFocusChangedListener(textInputLayout: TextInputLayout, textInputEditText: TextInputEditText) {
-        textInputEditText.setOnFocusChangeListener { view, hasFocus ->
+        textInputEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus)
                 textInputLayout.hint = "Password"
             else if (!hasFocus && textInputEditText.text?.isEmpty()!!)

@@ -5,13 +5,23 @@ import android.net.ConnectivityManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ConnectivityInterceptor (context: Context) : Interceptor {
+class ConnectivityInterceptor(context: Context) : Interceptor {
 
     private val appContext = context.applicationContext
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val response = chain.proceed(request)
+
         if (!isOnline())
             throw NoConnectivityException()
+
+        if (response.code() == 500)
+            throw InternalServerException()
+
+        if (response.code() == 404)
+            throw NotFoundException()
+
         return chain.proceed(chain.request())
     }
 

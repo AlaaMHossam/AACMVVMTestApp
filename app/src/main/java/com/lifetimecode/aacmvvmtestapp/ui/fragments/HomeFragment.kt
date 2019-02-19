@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,9 +21,8 @@ import com.lifetimecode.aacmvvmtestapp.data.datasources.network.NoConnectivityEx
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.viewmodels.FlightsViewModel
 import com.lifetimecode.aacmvvmtestapp.databinding.FragmentHomeBinding
+import com.lifetimecode.aacmvvmtestapp.ui.adapters.FlightsListAdapter
 import com.lifetimecode.aacmvvmtestapp.ui.items.FlightsItem
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -60,16 +58,15 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             setOnRefreshListener(this@HomeFragment)
         }
 
-       rv_home_flights.let {
-           if (activity?.resources?.configuration?.orientation == ORIENTATION_PORTRAIT)
-               it.layoutManager = LinearLayoutManager(activity)
-           else it.layoutManager = GridLayoutManager(activity, 2)
-       }
- /*
-            it.adapter = FlightsListAdapter()
-        }*/
+        rv_home_flights.let {
+            if (activity?.resources?.configuration?.orientation == ORIENTATION_PORTRAIT)
+                it.layoutManager = LinearLayoutManager(activity)
+            else it.layoutManager = GridLayoutManager(activity, 2)
 
-        rv_home_flights.adapter = GroupAdapter<ViewHolder>()
+            it.adapter = FlightsListAdapter()
+        }
+
+        //   rv_home_flights.adapter = GroupAdapter<ViewHolder>()
 
     }
 
@@ -81,9 +78,10 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         flightsViewModel.flightsLiveData.observe(this, Observer {
             srl_home_flights.isRefreshing = false
 
-            //  (rv_home_flights.adapter as FlightsListAdapter).submitList(it.result.arrivals)
 
-            (rv_home_flights.adapter as GroupAdapter).addAll(it.result.arrivals.toArrivalItems())
+            (rv_home_flights.adapter as FlightsListAdapter).submitList(it.result.arrivals)
+
+            //  (rv_home_flights.adapter as GroupAdapter).addAll(it.result.arrivals.toArrivalItems())
         })
     }
 
@@ -110,11 +108,12 @@ class HomeFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     fun onFlightClicked(view: View, arrival: Arrival, position: Int) {
 
-        Log.d("HomeFragment", "onFlightClicked : $position")
+        Log.d("HomeFragment", "onFlightClicked : ${view.tag}")
 
-        val directions =
-            HomeFragmentDirections.actionStartFlightDetails(arrival)
-        Navigation.findNavController(view).navigate(directions)
+
+        /*  val directions =
+              HomeFragmentDirections.actionStartFlightDetails(arrival)
+          Navigation.findNavController(view).navigate(directions)*/
     }
 
     override fun onRefresh() {

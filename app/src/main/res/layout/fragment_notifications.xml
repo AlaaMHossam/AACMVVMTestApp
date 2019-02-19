@@ -91,12 +91,28 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="32dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:backgroundTint="@android:color/white"
+                app:backgroundTint="@android:color/white"
                 android:textAllCaps="false"
                 android:textColor="#4A9CAD"
                 android:textStyle="bold"
                 android:elevation="4dp"
-                android:translationZ="4dp"/>
+                android:translationZ="4dp"
+                app:rippleColor="@color/colorAccent"
+                app:cornerRadius="30dp"/>
+
+        <TextView
+                android:text="TextView"
+                android:background="@android:color/white"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                app:shapeAppearance="@style/corner"
+                android:id="@+id/textView2"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

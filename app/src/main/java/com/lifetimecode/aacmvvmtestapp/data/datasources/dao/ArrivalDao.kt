@@ -1,4 +1,4 @@
-package com.lifetimecode.aacmvvmtestapp.data.datasources.db
+package com.lifetimecode.aacmvvmtestapp.data.datasources.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

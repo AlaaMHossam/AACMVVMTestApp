@@ -1,6 +1,6 @@
 package com.lifetimecode.aacmvvmtestapp.data.repositories
 
-import com.lifetimecode.aacmvvmtestapp.data.datasources.db.ArrivalDao
+import com.lifetimecode.aacmvvmtestapp.data.datasources.dao.ArrivalDao
 import com.lifetimecode.aacmvvmtestapp.data.datasources.network.Webservice
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.Arrival
 import com.lifetimecode.aacmvvmtestapp.data.models.flightsmodel.FlightsData

@@ -12,5 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
-
+<style name="corner">
+    <item name="cornerSize">20dp</item>
+</style>
 </resources>

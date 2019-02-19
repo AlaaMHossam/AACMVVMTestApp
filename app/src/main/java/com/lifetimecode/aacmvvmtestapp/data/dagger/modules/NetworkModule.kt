@@ -34,8 +34,8 @@ class NetworkModule(private val app: App) {
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
-            .addInterceptor(interceptor)
             .addInterceptor(ConnectivityInterceptor(app))
+            .addInterceptor(interceptor)
             .followSslRedirects(true)
             .build()
 

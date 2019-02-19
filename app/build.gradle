@@ -87,4 +87,10 @@ dependencies {
     // Community Dependencies
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
+
+    // Groupie
+    implementation 'com.xwray:groupie:2.3.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
+    implementation 'com.xwray:groupie-databinding:2.3.0'
+
 }
